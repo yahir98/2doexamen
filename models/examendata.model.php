@@ -2,8 +2,8 @@
 require_once "libs/dao.php";
 
 // Elaborar el algoritmo de los solicitado aquí.
-FROM `examen`.`juguetes`;
-*/
+
+
 /**
  * Obtiene los registro de la tabla de modas
  *
@@ -48,15 +48,17 @@ function obtenerEstados()
     );
 }
 
-function agregarNuevodato($dscjuguete, $prcjuguete, $estjuguete) {
-    $insSql = "INSERT INTO juguetes(nomjuguete, preciojuguete, estadojuguete)
-      values ('%s', %f, '%s');";
+function agregarNuevodato($dscplugin, $dscestado, $dschome,$dsccdn) {
+    $insSql = "INSERT INTO solicitud(yiul_plugin, yiul_estado, yiul_urlhomepage,yiul_urlcdn)
+      values ('%s','%s', '%s','%s');";
       if (ejecutarNonQuery(
           sprintf(
               $insSql,
-              $dscjuguete,
-              $prcjuguete,
-              $estjuguetes
+              $dscplugin,
+              $dscestado,
+              $dschome,
+              $dsccdn
+
           )))
       {
         return getLastInserId();
@@ -65,29 +67,31 @@ function agregarNuevodato($dscjuguete, $prcjuguete, $estjuguete) {
       }
 }
 
-function modificarJuguete($dscjuguete, $prcjuguete, $estjuguete, $idjuguete)
+function modificardato($dscplugin, $dscestado, $dschome, $dsccdn,$desccodigo)
 {
-    $updSQL = "UPDATE juguetes set nomjuguete='%s', preciojuguete=%f,
-    estadojuguete='%s' where idjuguetes=%d;";
+    $updSQL = "UPDATE solicitud set yiul_plugin='%s', yiul_estado='%s',yiul_urlhomepage='%s',
+    yiul_urlcdn='%s' where yiul_codigo=%d;";
 
     return ejecutarNonQuery(
         sprintf(
             $updSQL,
-            $dscjuguete,
-            $prcjuguete,
-            $estjuguete,
-            $idjuguete
+            $dscplugin,
+            $dscestado,
+            $dschome,
+            $dsccdn,
+            $desccodigo
+
         )
     );
 }
-function eliminarJuguete($idjuguete)
+function eliminardato($desccodigo)
 {
-    $delSQL = "DELETE FROM juguetes where idjuguetes=%d;";
+    $delSQL = "DELETE FROM solicitud where yiul_codigo=%d;";
 
     return ejecutarNonQuery(
         sprintf(
             $delSQL,
-            $idjuguete
+            $desccodigo
         )
     );
 }
